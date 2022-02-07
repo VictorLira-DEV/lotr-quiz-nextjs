@@ -1,0 +1,7 @@
+to enable styled component intelisense
+follow this instructions
+
+https://github.com/Microsoft/typescript-styled-plugin
+https://github.com/styled-components/vscode-styled-components/pull/41
+
+you are looking for "typescript-styled-plugin"
