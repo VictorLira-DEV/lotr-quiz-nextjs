@@ -4,7 +4,7 @@ import Quiz from "./Quiz";
 function QuizWrapper() {
   return (
     <StyledQuizWrapper>
-      <Quiz/>
+      <Quiz  />
     </StyledQuizWrapper>
   );
 }

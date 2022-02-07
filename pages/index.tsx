@@ -3,7 +3,7 @@ import Head from "next/head";
 import QuizWrapper from "../components/quiz/QuizWrapper";
 import Footer from "../components/layoult/Footer";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { QuestionsContext } from "../components/context/questionsContext";
 
 interface IApiresponse {
@@ -17,8 +17,13 @@ interface IApiresponse {
 }
 
 const Home: NextPage = (props: any) => {
-  let { allQuestionsFunction } = useContext(QuestionsContext);
-  allQuestionsFunction = props.questions;
+  const { allQuestionsFunction } = useContext(QuestionsContext);
+
+  useEffect(() => {
+    if (props.questions.length > 0) {
+      allQuestionsFunction(props.questions);
+    }
+  }, []);
 
   return (
     <div className="app">
@@ -55,6 +60,7 @@ export async function getStaticProps() {
         };
       }),
     },
+    revalidate: 3600,
   };
 }
 

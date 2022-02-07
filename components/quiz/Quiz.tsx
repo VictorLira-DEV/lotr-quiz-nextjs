@@ -1,30 +1,79 @@
 import StyledQuiz from "../styles/Quiz.styled";
-import Button from "./Button";
+import Button from "../ui/Button";
 import { useState } from "react";
 import AnswerBtn from "./AnswerBtn";
+import { useContext } from "react";
+import { QuestionsContext } from "../context/questionsContext";
 
+const questionLetters = ["A", "B", "C", "D"];
 
 function Quiz() {
   const [quizStarted, setQuizStarted] = useState(false);
-
-  const startQuiz = function () {
+  const [AllcorrectAnswers, setAllCorrectAnswers] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answerIsCorrect, setAnswerIsCorrect] = useState("");
+  const { allQuestionsValue } = useContext(QuestionsContext);
+  const startQuiz = async function (e: any) {
     setQuizStarted(true);
+    setCurrentQuestion(currentQuestion);
+    console.log(allQuestionsValue);
+  };
+
+  const checkTheAnswer = function (e: any) {
+    const correct = e.target.closest("button").getAttribute("data-correct");
+
+    if (correct === "true") {
+      setAnswerIsCorrect("correct");
+      setAllCorrectAnswers(AllcorrectAnswers + 1);
+      console.log(AllcorrectAnswers);
+      nextQuestion();
+      return;
+    }
+    setAnswerIsCorrect("incorrect");
+    nextQuestion();
+  };
+
+  const nextQuestion = function () {
+    if (currentQuestion === allQuestionsValue.length - 1) {
+      alert("its over");
+      return;
+    }
+    setTimeout(() => {
+      setAnswerIsCorrect("");
+      setCurrentQuestion((prev) => prev + 1);
+    }, 1000);
   };
 
   return (
     <StyledQuiz>
+      {AllcorrectAnswers}
       {quizStarted && (
         <div>
-          <h1>2 — Uma forma de declarar variável em JavaScript:</h1>
+          <h1> {allQuestionsValue[currentQuestion].question} </h1>
           <div>
-            <AnswerBtn letter="A" answer="Answer 1" />
-            <AnswerBtn letter="B" answer="Answer 2" />
-            <AnswerBtn letter="C" answer="Answer 3" />
-            <AnswerBtn letter="D" answer="Answer 4" />
+            {questionLetters.map((item, index) => {
+              return (
+                <AnswerBtn
+                  color={answerIsCorrect}
+                  background={answerIsCorrect}
+                  correctAnswer={
+                    allQuestionsValue[currentQuestion].answer[index].correct
+                  }
+                  key={allQuestionsValue[currentQuestion].answer[index].id}
+                  letter={item}
+                  answer={allQuestionsValue[currentQuestion].answer[index].text}
+                  onClick={(e) => checkTheAnswer(e)}
+                />
+              );
+            })}
           </div>
         </div>
       )}
-      {!quizStarted && <Button onClick={startQuiz}>Start</Button>}
+      {!quizStarted && (
+        <Button className="quizBtn" onClick={startQuiz}>
+          Start
+        </Button>
+      )}
     </StyledQuiz>
   );
 }
