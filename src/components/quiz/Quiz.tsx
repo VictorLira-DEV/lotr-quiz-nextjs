@@ -1,5 +1,5 @@
 import StyledQuiz from "../styles/Quiz.styled";
-import Button from "../ui/Button";
+import Button from "../../../components/ui/Button";
 import { useState } from "react";
 import AnswerBtn from "./AnswerBtn";
 import { useContext } from "react";

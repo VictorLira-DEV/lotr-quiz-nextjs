@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import QuizWrapper from "../components/quiz/QuizWrapper";
-import Footer from "../components/layoult/Footer";
+import QuizWrapper from "../src/components/quiz/QuizWrapper";
+import Footer from "../src/components/layoult/Footer";
 import axios from "axios";
 import { useContext, useEffect } from "react";
-import { QuestionsContext } from "../components/context/questionsContext";
+import { QuestionsContext } from "../src/components/context/questionsContext";
 
 interface IApiresponse {
   _id: string;

@@ -1,4 +1,3 @@
-import Button from "../ui/Button";
 import AnswerStyledBtn from "../styles/AnswerBtn.styled";
 
 interface IAnswers {
