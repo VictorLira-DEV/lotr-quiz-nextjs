@@ -1,10 +1,10 @@
 import StyledProgressBar from "../styles/ProgressBar";
 import Progress from "./Progress";
 
-function ProgressBar(props: {width: string}) {
+function ProgressBar() {
   return (
     <StyledProgressBar>
-      <Progress width={props.width} />
+      <Progress />
     </StyledProgressBar>
   );
 }

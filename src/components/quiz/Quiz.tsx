@@ -1,10 +1,11 @@
 import StyledQuiz from "../styles/Quiz.styled";
 import Button from "../ui/Button";
-import React, { useState, MouseEvent, FormEvent } from "react";
+import React, { useState } from "react";
 import AnswerBtn from "./AnswerBtn";
 import { useContext } from "react";
 import { QuestionsContext } from "../context/questionsContext";
 import ProgressBar from "./ProgressBar";
+import { ProgressBarContext } from "../context/progressBarContext";
 
 const questionLetters = ["A", "B", "C", "D"];
 
@@ -13,26 +14,22 @@ function Quiz() {
   const [AllcorrectAnswers, setAllCorrectAnswers] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIsCorrect, setAnswerIsCorrect] = useState("");
-  const [progressBar, setProgressBar] = useState("0");
   const { allQuestionsValue } = useContext(QuestionsContext);
+  const { progressBarFunction } = useContext(ProgressBarContext);
   const startQuiz = async function () {
     setQuizStarted(true);
     setCurrentQuestion(currentQuestion);
   };
 
-  let progress = "";
   const checkTheAnswer = function (e: React.MouseEvent<HTMLSpanElement>) {
     const correct = e.currentTarget
       .closest("button")
       ?.getAttribute("data-correct");
 
     if (correct === "true") {
+      let progress: string;
       progress = String(100 / allQuestionsValue.length);
-      console.log(progress);
-      setProgressBar((prev) => {
-        const width =  String(Number(prev) + Number(progress));
-        return width
-      });
+      progressBarFunction(progress);
       setAnswerIsCorrect("correct");
       setAllCorrectAnswers(AllcorrectAnswers + 1);
       nextQuestion();
@@ -55,14 +52,13 @@ function Quiz() {
 
   return (
     <React.Fragment>
-      <ProgressBar width={`${progressBar}%`} />
+      {quizStarted && <ProgressBar />}
       <StyledQuiz>
         {quizStarted && (
           <div>
             <h1>
-              {" "}
-              {currentQuestion + 1} —{" "}
-              {allQuestionsValue[currentQuestion].question}{" "}
+              {currentQuestion + 1} —
+              {allQuestionsValue[currentQuestion].question}
             </h1>
             <div>
               {questionLetters.map((item, index) => {

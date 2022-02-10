@@ -6,8 +6,8 @@ interface Iquestions {
   allQuestionsValue: IallQuestion[];
 }
 
-interface Iprops{
-  children: ReactNode
+interface Iprops {
+  children: ReactNode;
 }
 
 export let QuestionsContext = React.createContext({} as Iquestions);
