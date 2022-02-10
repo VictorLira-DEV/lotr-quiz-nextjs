@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
+import { IallQuestion } from "../../interface/allQuestion";
 
 interface Iquestions {
-  allQuestionsFunction: (a: any) => void;
-  allQuestionsValue: any;
+  allQuestionsFunction: (a: IallQuestion[]) => void;
+  allQuestionsValue: IallQuestion[];
+}
+
+interface Iprops{
+  children: ReactNode
 }
 
 export let QuestionsContext = React.createContext({} as Iquestions);
 
-const QuestionContextProvider = function (props: any) {
-  const [allQuestions, setAllQuestions] = useState([]);
+const QuestionContextProvider = function (props: Iprops) {
+  const [allQuestions, setAllQuestions] = useState<IallQuestion[]>();
 
-  function getAllQuestions(questions: any) {
+  function getAllQuestions(questions: IallQuestion[]) {
     setAllQuestions(questions);
   }
 

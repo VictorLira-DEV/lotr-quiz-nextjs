@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
+import { AppProps } from "next/app";
 import Head from "next/head";
 import QuizWrapper from "../src/components/quiz/QuizWrapper";
-import Footer from "../src/components/layoult/Footer";
 import axios from "axios";
 import { useContext, useEffect } from "react";
 import { QuestionsContext } from "../src/components/context/questionsContext";
@@ -33,7 +33,6 @@ const Home: NextPage = (props: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <QuizWrapper />
-      <Footer />
     </div>
   );
 };

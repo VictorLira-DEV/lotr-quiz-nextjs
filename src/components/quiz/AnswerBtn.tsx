@@ -3,7 +3,7 @@ import AnswerStyledBtn from "../styles/AnswerBtn.styled";
 interface IAnswers {
   letter: string;
   answer: string;
-  correctAnswer: string;
+  correctAnswer: boolean;
   background: string;
   onClick: (e: any) => void;
   color: string;

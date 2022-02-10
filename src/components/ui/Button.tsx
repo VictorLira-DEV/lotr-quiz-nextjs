@@ -1,4 +1,4 @@
-import StyledButton from "../../src/components/styles/Button.styled";
+import StyledButton from "../styles/Button.styled";
 
 interface IButton {
   children: any;
