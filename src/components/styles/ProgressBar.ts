@@ -7,5 +7,7 @@ const StyledProgressBar = styled.div`
     margin: 0 auto;
     margin-bottom: 20px;
     border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
 `
 export default StyledProgressBar;

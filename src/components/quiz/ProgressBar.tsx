@@ -1,10 +1,16 @@
 import StyledProgressBar from "../styles/ProgressBar";
 import Progress from "./Progress";
+import { useContext } from "react";
+import { ProgressBarContext } from "../context/progressBarContext";
 
 function ProgressBar() {
+  const { correctProgress, wrongProgress } = useContext(ProgressBarContext);
+  console.log(correctProgress);
+
   return (
     <StyledProgressBar>
-      <Progress />
+      <Progress width={`${correctProgress.width}%`} isCorrect="correct" />
+      <Progress width={`${wrongProgress.width}%`} isCorrect="incorrect" />
     </StyledProgressBar>
   );
 }

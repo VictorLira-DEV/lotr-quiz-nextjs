@@ -6,18 +6,25 @@ import { useContext } from "react";
 import { QuestionsContext } from "../context/questionsContext";
 import ProgressBar from "./ProgressBar";
 import { ProgressBarContext } from "../context/progressBarContext";
+import TryAgain from "./TryAgain";
 
 const questionLetters = ["A", "B", "C", "D"];
 
 function Quiz() {
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [AllcorrectAnswers, setAllCorrectAnswers] = useState(0);
+  const [gameProgress, setGameProgress] = useState({
+    hasStarted: false,
+    hasEnded: false,
+  });
+  const [allcorrectAnswers, setAllCorrectAnswers] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIsCorrect, setAnswerIsCorrect] = useState("");
   const { allQuestionsValue } = useContext(QuestionsContext);
   const { progressBarFunction } = useContext(ProgressBarContext);
   const startQuiz = async function () {
-    setQuizStarted(true);
+    setGameProgress({
+      hasStarted: true,
+      hasEnded: false,
+    });
     setCurrentQuestion(currentQuestion);
   };
 
@@ -26,22 +33,26 @@ function Quiz() {
       .closest("button")
       ?.getAttribute("data-correct");
 
-    if (correct === "true") {
-      let progress: string;
-      progress = String(100 / allQuestionsValue.length);
-      progressBarFunction(progress);
-      setAnswerIsCorrect("correct");
-      setAllCorrectAnswers(AllcorrectAnswers + 1);
+    let progress: string;
+    progress = String(100 / allQuestionsValue.length);
+    if (correct === "false") {
+      progressBarFunction(progress, "incorrect");
+      setAnswerIsCorrect("incorrect");
       nextQuestion();
       return;
     }
-    setAnswerIsCorrect("incorrect");
+    progressBarFunction(progress, "correct");
+    setAnswerIsCorrect("correct");
+    setAllCorrectAnswers(allcorrectAnswers + 1);
     nextQuestion();
   };
 
   const nextQuestion = function () {
     if (currentQuestion === allQuestionsValue.length - 1) {
-      alert("its over");
+      setGameProgress({
+        hasStarted: true,
+        hasEnded: true,
+      });
       return;
     }
     setTimeout(() => {
@@ -50,11 +61,13 @@ function Quiz() {
     }, 1000);
   };
 
+  let { hasStarted, hasEnded } = gameProgress;
+
   return (
     <React.Fragment>
-      {quizStarted && <ProgressBar />}
+      {hasStarted && <ProgressBar />}
       <StyledQuiz>
-        {quizStarted && (
+        {hasStarted && !hasEnded && (
           <div>
             <h1>
               {currentQuestion + 1} —
@@ -81,10 +94,16 @@ function Quiz() {
             </div>
           </div>
         )}
-        {!quizStarted && (
+        {!hasStarted && (
           <Button className="quizBtn" onClick={startQuiz}>
             Start
           </Button>
+        )}
+        {hasStarted && hasEnded && (
+          <TryAgain
+            correctAnswers={allcorrectAnswers}
+            allQuestions={allQuestionsValue}
+          />
         )}
       </StyledQuiz>
     </React.Fragment>

@@ -3,7 +3,7 @@ import StyledButton from "../styles/Button.styled";
 interface IButton {
   children: any;
   onClick?: (e: any) => void;
-  className: string;
+  className?: string;
 }
 
 function Button(props: IButton) {

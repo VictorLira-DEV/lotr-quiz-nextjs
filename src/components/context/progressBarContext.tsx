@@ -1,8 +1,9 @@
 import React, { ReactNode, useState } from "react";
 
 interface IProgressBarContext {
-  progressBarValue: string;
-  progressBarFunction: (a: string) => void;
+  correctProgress: { width: string; value: string };
+  wrongProgress: { width: string; value: string };
+  progressBarFunction: (a: string, b: string) => void;
 }
 
 interface IProps {
@@ -14,18 +15,41 @@ export const ProgressBarContext = React.createContext(
 );
 
 function ProgressBarProvider(props: IProps) {
-  const [progressBar, setProgressBar] = useState("0");
+  const [correctProgress, setCorrectProgress] = useState({
+    width: "0",
+    value: "correct",
+  });
+  const [wrongProgress, setWrongProgress] = useState({
+    width: "0",
+    value: "incorrect",
+  });
 
-  const increaseProgressBar = function (progress: string) {
-    setProgressBar((prev) => {
-      const width = String(Number(prev) + Number(progress));
-      return width;
-    });
+  const increaseProgressBar = function (progress: string, type: string) {
+    console.log(progress);
+    if (type === "correct") {
+      setCorrectProgress((prev) => {
+        const width = String(Number(prev.width) + Number(progress));
+        console.log(width);
+        return {
+          width: width,
+          value: type,
+        };
+      });
+    } else {
+      setWrongProgress((prev) => {
+        const width = String(Number(prev.width) + Number(progress));
+        return {
+          width: width,
+          value: type,
+        };
+      });
+    }
   };
 
   let values = {
     progressBarFunction: increaseProgressBar,
-    progressBarValue: progressBar,
+    correctProgress: correctProgress,
+    wrongProgress: wrongProgress,
   };
   return (
     <ProgressBarContext.Provider value={values}>

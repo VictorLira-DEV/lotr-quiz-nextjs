@@ -1,10 +1,16 @@
 import StyledProgress from "../styles/Progress";
-import { ProgressBarContext } from "../context/progressBarContext";
 import { useContext } from "react";
+import { ProgressBarContext } from "../context/progressBarContext";
 
-function Progress() {
-  const { progressBarValue } = useContext(ProgressBarContext);
-  return <StyledProgress width={`${progressBarValue}%`} />;
+function Progress(props: any) {
+  const { correctProgress, wrongProgress } = useContext(ProgressBarContext);
+
+  return (
+    <StyledProgress
+      isCorrect={props.isCorrect}
+      width={props.width}
+    />
+  );
 }
 
 export default Progress;
