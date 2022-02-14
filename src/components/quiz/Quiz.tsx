@@ -19,7 +19,9 @@ function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIsCorrect, setAnswerIsCorrect] = useState("");
   const { allQuestionsValue } = useContext(QuestionsContext);
-  const { progressBarFunction } = useContext(ProgressBarContext);
+  const { progressBarFunction, restartProgress } =
+    useContext(ProgressBarContext);
+    
   const startQuiz = async function () {
     setGameProgress({
       hasStarted: true,
@@ -59,6 +61,17 @@ function Quiz() {
       setAnswerIsCorrect("");
       setCurrentQuestion((prev) => prev + 1);
     }, 1000);
+  };
+
+  const restartQuiz = function () {
+    setCurrentQuestion(0);
+    setAllCorrectAnswers(0);
+    setAnswerIsCorrect("");
+    restartProgress();
+    setGameProgress({
+      hasStarted: true,
+      hasEnded: false,
+    });
   };
 
   let { hasStarted, hasEnded } = gameProgress;
@@ -103,6 +116,7 @@ function Quiz() {
           <TryAgain
             correctAnswers={allcorrectAnswers}
             allQuestions={allQuestionsValue}
+            onClick={restartQuiz}
           />
         )}
       </StyledQuiz>

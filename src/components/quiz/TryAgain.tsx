@@ -1,10 +1,11 @@
 import Button from "../ui/Button";
 import { IallQuestion } from "../../interface/allQuestion";
-import StyledTryAgain from '../styles/TryAgain'
+import StyledTryAgain from "../styles/TryAgain";
 
 interface ITryAgain {
   correctAnswers: number;
   allQuestions: IallQuestion[];
+  onClick: () => void;
 }
 
 function TryAgain(props: ITryAgain) {
@@ -12,11 +13,12 @@ function TryAgain(props: ITryAgain) {
 
   return (
     <StyledTryAgain>
-      <h1>Parabéns</h1>
+      <h1>Good Job</h1>
       <p>
-        Você acertou {correctAnswers} de {allQuestions.length} perguntas
+        You got <span> {correctAnswers} </span> out of
+        <span> {allQuestions.length} </span> questions
       </p>
-      <Button> Try again </Button>
+      <Button onClick={() => props.onClick()}> Try again </Button>
     </StyledTryAgain>
   );
 }

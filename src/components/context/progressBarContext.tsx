@@ -4,6 +4,7 @@ interface IProgressBarContext {
   correctProgress: { width: string; value: string };
   wrongProgress: { width: string; value: string };
   progressBarFunction: (a: string, b: string) => void;
+  restartProgress: () => void;
 }
 
 interface IProps {
@@ -46,8 +47,21 @@ function ProgressBarProvider(props: IProps) {
     }
   };
 
+  const restartProgress = function () {
+    setCorrectProgress({
+      width: "0",
+      value: "correct",
+    });
+
+    setWrongProgress({
+      width: "0",
+      value: "incorrect",
+    });
+  };
+
   let values = {
     progressBarFunction: increaseProgressBar,
+    restartProgress: restartProgress,
     correctProgress: correctProgress,
     wrongProgress: wrongProgress,
   };
