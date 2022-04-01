@@ -26,11 +26,9 @@ function ProgressBarProvider(props: IProps) {
   });
 
   const increaseProgressBar = function (progress: string, type: string) {
-    console.log(progress);
     if (type === "correct") {
       setCorrectProgress((prev) => {
         const width = String(Number(prev.width) + Number(progress));
-        console.log(width);
         return {
           width: width,
           value: type,

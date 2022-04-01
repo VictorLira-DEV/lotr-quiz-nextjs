@@ -5,7 +5,6 @@ import { ProgressBarContext } from "../context/progressBarContext";
 
 function ProgressBar() {
   const { correctProgress, wrongProgress } = useContext(ProgressBarContext);
-  console.log(correctProgress);
 
   return (
     <StyledProgressBar>

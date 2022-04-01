@@ -18,10 +18,11 @@ function Quiz() {
   const [allcorrectAnswers, setAllCorrectAnswers] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIsCorrect, setAnswerIsCorrect] = useState("");
+  const [loadingNextQuestion, setLoadingNextQuestion] = useState(false)
   const { allQuestionsValue } = useContext(QuestionsContext);
   const { progressBarFunction, restartProgress } =
     useContext(ProgressBarContext);
-    
+
   const startQuiz = async function () {
     setGameProgress({
       hasStarted: true,
@@ -31,12 +32,14 @@ function Quiz() {
   };
 
   const checkTheAnswer = function (e: React.MouseEvent<HTMLSpanElement>) {
+    if (currentQuestion >= allQuestionsValue.length - 1) return;
+
     const correct = e.currentTarget
       .closest("button")
       ?.getAttribute("data-correct");
 
     let progress: string;
-    progress = String(100 / allQuestionsValue.length);
+    progress = String(100 / (allQuestionsValue.length - 1));
     if (correct === "false") {
       progressBarFunction(progress, "incorrect");
       setAnswerIsCorrect("incorrect");
@@ -50,17 +53,20 @@ function Quiz() {
   };
 
   const nextQuestion = function () {
-    if (currentQuestion === allQuestionsValue.length - 1) {
+    if (currentQuestion >= allQuestionsValue.length - 2) {
       setGameProgress({
         hasStarted: true,
         hasEnded: true,
       });
       return;
     }
-    setTimeout(() => {
-      setAnswerIsCorrect("");
-      setCurrentQuestion((prev) => prev + 1);
-    }, 1000);
+
+    if (currentQuestion <= allQuestionsValue.length - 1) {
+      setTimeout(() => {
+        setAnswerIsCorrect("");
+        setCurrentQuestion((prev) => prev + 1);
+      }, 1000);
+    }
   };
 
   const restartQuiz = function () {

@@ -7,6 +7,7 @@ interface IAnswerStyledBtn {
 
 const AnswerStyledBtn = styled.button<IAnswerStyledBtn>`
   display: flex;
+  cursor: pointer;
   align-items: center;
   color: rgb(42, 39, 42);
   transition: 0.3s ease-in-out;
