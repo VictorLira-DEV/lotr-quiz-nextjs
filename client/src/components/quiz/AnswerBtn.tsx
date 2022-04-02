@@ -7,13 +7,16 @@ interface IAnswers {
   background: string;
   onClick: (e: any) => void;
   color: string;
+  className: string;
 }
 
 function AnswerBtn(props: IAnswers) {
-  const { answer, letter, onClick, correctAnswer, background } = props;
+  const { answer, letter, onClick, correctAnswer, background, className } =
+    props;
 
   return (
     <AnswerStyledBtn
+      className={className}
       color={props.color}
       onClick={(e) => onClick(e)}
       data-correct={correctAnswer}

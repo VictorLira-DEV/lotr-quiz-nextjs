@@ -18,7 +18,7 @@ function Quiz() {
   const [allcorrectAnswers, setAllCorrectAnswers] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIsCorrect, setAnswerIsCorrect] = useState("");
-  const [loadingNextQuestion, setLoadingNextQuestion] = useState(false)
+  const [answersBtnEnabled, setAnswersBtnEnabled] = useState(true);
   const { allQuestionsValue } = useContext(QuestionsContext);
   const { progressBarFunction, restartProgress } =
     useContext(ProgressBarContext);
@@ -32,7 +32,8 @@ function Quiz() {
   };
 
   const checkTheAnswer = function (e: React.MouseEvent<HTMLSpanElement>) {
-    if (currentQuestion >= allQuestionsValue.length - 1) return;
+    if (currentQuestion >= allQuestionsValue.length - 1 || !answersBtnEnabled)
+      return;
 
     const correct = e.currentTarget
       .closest("button")
@@ -53,6 +54,8 @@ function Quiz() {
   };
 
   const nextQuestion = function () {
+    if (!answersBtnEnabled) return;
+
     if (currentQuestion >= allQuestionsValue.length - 2) {
       setGameProgress({
         hasStarted: true,
@@ -65,8 +68,10 @@ function Quiz() {
       setTimeout(() => {
         setAnswerIsCorrect("");
         setCurrentQuestion((prev) => prev + 1);
+        setAnswersBtnEnabled(true);
       }, 1000);
     }
+    setAnswersBtnEnabled(false);
   };
 
   const restartQuiz = function () {
@@ -89,13 +94,16 @@ function Quiz() {
         {hasStarted && !hasEnded && (
           <div>
             <h1>
-              {currentQuestion + 1} —
+              {currentQuestion + 1}&nbsp;—&nbsp;
               {allQuestionsValue[currentQuestion].question}
             </h1>
             <div>
               {questionLetters.map((item, index) => {
                 return (
                   <AnswerBtn
+                    className={`${
+                      !answersBtnEnabled ? "btn__answer--disabled" : ""
+                    }`}
                     color={answerIsCorrect}
                     background={answerIsCorrect}
                     correctAnswer={
@@ -114,7 +122,7 @@ function Quiz() {
           </div>
         )}
         {!hasStarted && (
-          <Button className="quizBtn" onClick={startQuiz}>
+          <Button className="btn__start" onClick={startQuiz}>
             Start
           </Button>
         )}

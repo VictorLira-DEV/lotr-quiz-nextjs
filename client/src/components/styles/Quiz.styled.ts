@@ -23,7 +23,7 @@ const StyledQuiz = styled.main`
     }
   }
   //start btn
-  .quizBtn {
+  .btn__start {
     width: 100px;
     background: rgb(42, 39, 42);
     height: 50px;
@@ -33,6 +33,12 @@ const StyledQuiz = styled.main`
     &:hover {
       background: rgba(0, 0, 0, 0.9);
     }
+  }
+
+  .btn__answer--disabled {
+    cursor: not-allowed;
+    opacity: 70%;
+    filter: blur(1px);
   }
 `;
 
