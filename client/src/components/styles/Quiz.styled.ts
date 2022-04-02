@@ -9,7 +9,6 @@ const StyledQuiz = styled.main`
   h1 {
     margin-bottom: 20px;
     color: rgb(42, 39, 42);
-    padding: 0 20px;
   }
   //quiz container
   & > div:first-of-type {
@@ -39,6 +38,10 @@ const StyledQuiz = styled.main`
     cursor: not-allowed;
     opacity: 70%;
     filter: blur(1px);
+  }
+
+  @media screen and (max-width:  550px){
+    width: 100%;
   }
 `;
 

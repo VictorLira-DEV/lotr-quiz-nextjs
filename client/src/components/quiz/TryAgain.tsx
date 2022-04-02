@@ -1,6 +1,6 @@
 import Button from "../ui/Button";
 import { IallQuestion } from "../../interface/allQuestion";
-import StyledTryAgain from "../styles/TryAgain";
+import StyledTryAgain from "../styles/TryAgain.styled";
 
 interface ITryAgain {
   correctAnswers: number;

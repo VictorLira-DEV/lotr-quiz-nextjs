@@ -1,4 +1,4 @@
-import StyledProgressBar from "../styles/ProgressBar";
+import StyledProgressBar from "../styles/ProgressBar.styled";
 import Progress from "./Progress";
 import { useContext } from "react";
 import { ProgressBarContext } from "../context/progressBarContext";
